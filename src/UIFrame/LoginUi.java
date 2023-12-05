@@ -165,7 +165,7 @@ public class LoginUi extends javax.swing.JDialog {
 
             //exchange UI frame
             this.dispose();
-            CustomerController customerController = new CustomerController(customerModel);
+            CustomerController customerController = new CustomerController(customerModel, null);
             CustomerTasksUI customerTasks = new CustomerTasksUI(customerModel, customerController);
             customerTasks.setVisible(true);
 

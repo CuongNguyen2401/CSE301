@@ -8,6 +8,6 @@ import model.CurrentAccountModel;
  */
 public interface ICurrentAccountDAO extends GenericDAO<CurrentAccountModel>{
 
-    String savingCurrentAcount(CurrentAccountModel currentAccountModel, String interestRate, String id);
+    String saveCurrentAcount(CurrentAccountModel currentAccountMode, String id);
 
 }

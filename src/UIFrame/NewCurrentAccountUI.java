@@ -1,20 +1,28 @@
 package UIFrame;
 
+import controller.CustomerController;
+import java.util.List;
+
 /**
  *
  * @author ACER
  */
 public class NewCurrentAccountUI extends javax.swing.JDialog {
 
+    private CustomerController customerController;
+
     /**
      * Creates new form NewCurrentAccountUI
      *
      * @param customerUI
      * @param modal
+     * @param customerController
      */
-    public NewCurrentAccountUI(CustomerTasksUI customerUI, boolean modal) {
+    public NewCurrentAccountUI(CustomerTasksUI customerUI, boolean modal, CustomerController customerController) {
         super(customerUI, modal);
+        this.customerController = customerController;
         initComponents();
+        onLoadCityBranch();
     }
 
     /**
@@ -29,15 +37,14 @@ public class NewCurrentAccountUI extends javax.swing.JDialog {
         profilePanel = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        cmbxPhone = new javax.swing.JComboBox<>();
+        cmbxBranch = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
-        txtName = new javax.swing.JTextField();
-        btnSubmit = new javax.swing.JButton();
-        btnUpdate = new javax.swing.JButton();
+        txtBalance = new javax.swing.JTextField();
+        btnCreate = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        txtOverdrafts = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -47,22 +54,19 @@ public class NewCurrentAccountUI extends javax.swing.JDialog {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel6.setText("Branch:");
 
-        cmbxPhone.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        cmbxPhone.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbxBranch.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        cmbxBranch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel10.setText("$");
 
-        txtName.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtBalance.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
-        btnSubmit.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnSubmit.setText("Submit");
-
-        btnUpdate.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnUpdate.setText("Update");
-        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+        btnCreate.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnCreate.setText("Create");
+        btnCreate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateActionPerformed(evt);
+                btnCreateActionPerformed(evt);
             }
         });
 
@@ -74,46 +78,39 @@ public class NewCurrentAccountUI extends javax.swing.JDialog {
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(51, 51, 255));
-        jLabel12.setText("300001012013");
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel7.setText("300");
+        txtOverdrafts.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtOverdrafts.setForeground(new java.awt.Color(255, 0, 0));
 
         javax.swing.GroupLayout profilePanelLayout = new javax.swing.GroupLayout(profilePanel);
         profilePanel.setLayout(profilePanelLayout);
         profilePanelLayout.setHorizontalGroup(
             profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(profilePanelLayout.createSequentialGroup()
+                .addGap(33, 33, 33)
                 .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(profilePanelLayout.createSequentialGroup()
-                        .addGap(52, 52, 52)
-                        .addComponent(btnUpdate)
-                        .addGap(22, 22, 22)
-                        .addComponent(btnSubmit))
+                        .addComponent(jLabel5)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(profilePanelLayout.createSequentialGroup()
-                        .addGap(33, 33, 33)
                         .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11))
+                        .addGap(35, 35, 35)
+                        .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cmbxBranch, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(profilePanelLayout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(profilePanelLayout.createSequentialGroup()
-                                .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel11))
-                                .addGap(35, 35, 35)
-                                .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cmbxPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(profilePanelLayout.createSequentialGroup()
-                                        .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel10))))
-                            .addGroup(profilePanelLayout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(txtBalance, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel10))))
+                    .addGroup(profilePanelLayout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnCreate)
+                            .addComponent(txtOverdrafts, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
         profilePanelLayout.setVerticalGroup(
             profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,28 +122,26 @@ public class NewCurrentAccountUI extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtBalance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11))
                 .addGap(18, 18, 18)
                 .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(cmbxPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbxBranch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jLabel7))
-                .addGap(179, 179, 179)
-                .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnUpdate)
-                    .addComponent(btnSubmit))
-                .addContainerGap(37, Short.MAX_VALUE))
+                    .addComponent(txtOverdrafts))
+                .addGap(18, 18, 18)
+                .addComponent(btnCreate)
+                .addContainerGap(198, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(profilePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(profilePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,27 +154,36 @@ public class NewCurrentAccountUI extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+    public final void onLoadCityBranch() {
 
+        cmbxBranch.removeAllItems();
 
-    }//GEN-LAST:event_btnUpdateActionPerformed
+        List<String> branchCities = customerController.selectBranch();
+
+        for (String branchCity : branchCities) {
+            cmbxBranch.addItem(branchCity);
+        }
+    }
+
+    private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
+
+    }//GEN-LAST:event_btnCreateActionPerformed
 
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnSubmit;
-    private javax.swing.JButton btnUpdate;
-    private javax.swing.JComboBox<String> cmbxPhone;
+    private javax.swing.JButton btnCreate;
+    private javax.swing.JComboBox<String> cmbxBranch;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel profilePanel;
-    private javax.swing.JTextField txtName;
+    private javax.swing.JTextField txtBalance;
+    private javax.swing.JLabel txtOverdrafts;
     // End of variables declaration//GEN-END:variables
 }

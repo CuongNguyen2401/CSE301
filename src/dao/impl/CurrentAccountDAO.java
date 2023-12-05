@@ -11,7 +11,7 @@ import model.CurrentAccountModel;
 public class CurrentAccountDAO extends AbstractDAO<CurrentAccountModel> implements ICurrentAccountDAO {
 
     @Override
-    public String savingCurrentAcount(CurrentAccountModel currentAccountModel, String interestRate, String id) {
+    public String saveCurrentAcount(CurrentAccountModel currentAccountModel, String id) {
         String sql = "INSERT INTO current_account (account_number, balance, branch_id, overdrafts)"
                 + "VALUES (?, ?, ?, ?)";
         insert(sql, currentAccountModel.getAccountNumber(), currentAccountModel.getBalance(), currentAccountModel.getBranchID(), currentAccountModel.getOverdrafts());
@@ -20,8 +20,12 @@ public class CurrentAccountDAO extends AbstractDAO<CurrentAccountModel> implemen
                 + "VALUES (?, ?, ?)";
         Date currentDate = new Date();
         insert(sql2, currentAccountModel.getAccountNumber(), id, new java.sql.Date(currentDate.getTime()));
-        
+
         return currentAccountModel.getAccountNumber();
     }
 
+    public String selectLastCurrentAccount() {
+
+        return "concac";
+    }
 }

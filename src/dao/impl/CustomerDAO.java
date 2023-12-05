@@ -1,7 +1,15 @@
 package dao.impl;
 
 import dao.ICustomerDao;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import mapper.CustomerMapper;
 import model.CustomerModel;
 
@@ -19,7 +27,6 @@ public class CustomerDAO extends AbstractDAO<CustomerModel> implements ICustomer
         List<CustomerModel> models = query(sql, new CustomerMapper(), customer_id);
 
         return models.isEmpty() ? null : models.get(0);
-
     }
 
     @Override
@@ -61,5 +68,69 @@ public class CustomerDAO extends AbstractDAO<CustomerModel> implements ICustomer
             System.out.println(e.getMessage());
         }
 
+    }
+
+    public List<String> selectBranchCities() {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        List<String> branchCities = new ArrayList<>();
+
+        try {
+            connection = getConnection();
+            connection.setAutoCommit(false);
+
+            String sql = "SELECT branch_city FROM branch";
+
+            statement = connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String branchCity = resultSet.getString("branch_city");
+                branchCities.add(branchCity);
+            }
+
+            connection.commit();
+
+            return branchCities;
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, ex);
+
+            try {
+                if (connection != null) {
+                    connection.rollback();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return null;
+    }
+
+    public java.sql.Connection getConnection() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/bankingxyz";
+            String user = "root";
+            String password = "";
+            return DriverManager.getConnection(url, user, password);
+        } catch (ClassNotFoundException | SQLException e) {
+            return null;
+        }
     }
 }

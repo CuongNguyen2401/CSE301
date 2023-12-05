@@ -10,10 +10,10 @@ import model.CustomerModel;
  * @author ACER
  */
 public class CustomerTasksUI extends javax.swing.JFrame {
-
+    
     private CustomerModel customerModel;
     private CustomerController cusController;
-
+    
     public CustomerTasksUI(CustomerModel customerModel, CustomerController cusController) {
         this.customerModel = customerModel;
         this.cusController = cusController;
@@ -277,7 +277,12 @@ public class CustomerTasksUI extends javax.swing.JFrame {
         parentCard.add(profilePanel, "card2");
 
         btnOpen.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnOpen.setText("Open");
+        btnOpen.setText("Open new account");
+        btnOpen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOpenActionPerformed(evt);
+            }
+        });
 
         btnTransfer.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnTransfer.setText("Transfer");
@@ -300,11 +305,11 @@ public class CustomerTasksUI extends javax.swing.JFrame {
         currentAccountLayout.setHorizontalGroup(
             currentAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(currentAccountLayout.createSequentialGroup()
-                .addGap(80, 80, 80)
+                .addContainerGap()
                 .addComponent(btnOpen)
-                .addGap(145, 145, 145)
+                .addGap(18, 18, 18)
                 .addComponent(btnTransfer)
-                .addContainerGap(132, Short.MAX_VALUE))
+                .addContainerGap(225, Short.MAX_VALUE))
             .addGroup(currentAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE))
         );
@@ -364,7 +369,7 @@ public class CustomerTasksUI extends javax.swing.JFrame {
             }
         });
     }
-
+    
     private void onLoad() {
         this.txtCity.setText(customerModel.getCity());
         this.txtName.setText(customerModel.getName());
@@ -372,19 +377,19 @@ public class CustomerTasksUI extends javax.swing.JFrame {
         this.txtProvince.setText(customerModel.getProvince());
         this.txtSsn.setText(customerModel.getSsn());
         this.txtStreet.setText(customerModel.getStreet());
-
+        
     }
-
+    
     private void updateInformation() {
         customerModel.setCity(this.txtCity.getText());
         customerModel.setProvince(this.txtProvince.getText());
         customerModel.setName(this.txtName.getText());
         customerModel.setStreet(this.txtStreet.getText());
-
+        
         cusController.updateInformationCustomer(customerModel);
         System.out.println(customerModel.getCustomer_id());
     }
-
+    
 
     private void btnViewProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewProfileActionPerformed
         parentCard.removeAll();
@@ -412,6 +417,13 @@ public class CustomerTasksUI extends javax.swing.JFrame {
         this.txtName.setEnabled(true);
         this.txtStreet.setEnabled(true);
     }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenActionPerformed
+        this.dispose();
+        NewCurrentAccountUI newcurrentAccount = new NewCurrentAccountUI(this, true, cusController);
+        newcurrentAccount.setVisible(true);
+        
+    }//GEN-LAST:event_btnOpenActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
