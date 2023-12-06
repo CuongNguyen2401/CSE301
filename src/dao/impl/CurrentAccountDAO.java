@@ -2,6 +2,8 @@ package dao.impl;
 
 import dao.ICurrentAccountDAO;
 import java.util.Date;
+import java.util.List;
+import mapper.CurrentAccountMapper;
 import model.CurrentAccountModel;
 
 /**
@@ -24,8 +26,19 @@ public class CurrentAccountDAO extends AbstractDAO<CurrentAccountModel> implemen
         return currentAccountModel.getAccountNumber();
     }
 
-    public String selectLastCurrentAccount() {
-
-        return "concac";
+    @Override
+    public List<CurrentAccountModel> findAllcurrentAccount() {
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT * FROM current_account");
+        return query(sql.toString(), new CurrentAccountMapper());
     }
+
+    @Override
+    public CurrentAccountModel findCurrentAccountModelByID(String id) {
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT * FROM current_account where account_number = ?");
+        List<CurrentAccountModel> models = query(sql.toString(), new CurrentAccountMapper(), id);
+        return models.isEmpty() ? null : models.get(0);
+    }
+
 }

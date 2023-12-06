@@ -419,10 +419,9 @@ public class CustomerTasksUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenActionPerformed
-        this.dispose();
+        this.setVisible(false);
         NewCurrentAccountUI newcurrentAccount = new NewCurrentAccountUI(this, true, cusController);
         newcurrentAccount.setVisible(true);
-        
     }//GEN-LAST:event_btnOpenActionPerformed
 
 

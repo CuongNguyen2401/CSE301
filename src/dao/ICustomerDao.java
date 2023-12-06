@@ -15,7 +15,7 @@ public interface ICustomerDao extends GenericDAO<CustomerModel> {
 
     void update(CustomerModel customer);
 
-    List<CustomerModel> findAllCustomer ();
+    List<CustomerModel> findAllCustomer();
 
     String findLastCustomerID();
 

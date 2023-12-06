@@ -10,6 +10,8 @@ import java.util.List;
 public class NewCurrentAccountUI extends javax.swing.JDialog {
 
     private CustomerController customerController;
+    private CustomerTasksUI customerUI;
+    
 
     /**
      * Creates new form NewCurrentAccountUI
@@ -21,6 +23,7 @@ public class NewCurrentAccountUI extends javax.swing.JDialog {
     public NewCurrentAccountUI(CustomerTasksUI customerUI, boolean modal, CustomerController customerController) {
         super(customerUI, modal);
         this.customerController = customerController;
+        this.customerUI=customerUI;
         initComponents();
         onLoadCityBranch();
     }
@@ -45,6 +48,7 @@ public class NewCurrentAccountUI extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         txtOverdrafts = new javax.swing.JLabel();
+        btnBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -82,6 +86,14 @@ public class NewCurrentAccountUI extends javax.swing.JDialog {
         txtOverdrafts.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         txtOverdrafts.setForeground(new java.awt.Color(255, 0, 0));
 
+        btnBack.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnBack.setText("<- Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout profilePanelLayout = new javax.swing.GroupLayout(profilePanel);
         profilePanel.setLayout(profilePanelLayout);
         profilePanelLayout.setHorizontalGroup(
@@ -105,7 +117,9 @@ public class NewCurrentAccountUI extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel10))))
                     .addGroup(profilePanelLayout.createSequentialGroup()
-                        .addComponent(jLabel4)
+                        .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel4)
+                            .addComponent(btnBack))
                         .addGap(18, 18, 18)
                         .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnCreate)
@@ -133,7 +147,9 @@ public class NewCurrentAccountUI extends javax.swing.JDialog {
                     .addComponent(jLabel4)
                     .addComponent(txtOverdrafts))
                 .addGap(18, 18, 18)
-                .addComponent(btnCreate)
+                .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCreate)
+                    .addComponent(btnBack))
                 .addContainerGap(198, Short.MAX_VALUE))
         );
 
@@ -169,11 +185,17 @@ public class NewCurrentAccountUI extends javax.swing.JDialog {
 
     }//GEN-LAST:event_btnCreateActionPerformed
 
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        this.dispose();
+        customerUI.setVisible(true);
+    }//GEN-LAST:event_btnBackActionPerformed
+
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnCreate;
     private javax.swing.JComboBox<String> cmbxBranch;
     private javax.swing.JLabel jLabel10;

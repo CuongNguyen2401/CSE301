@@ -20,12 +20,8 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/ACER/Desktop/Term_1_2023_2024/CSE301/Project301/ProjectBankingXYZ/src/UIFrame/CustomerTasksUI.java</file>
-            <file>file:/C:/Users/ACER/Desktop/Term_1_2023_2024/CSE301/Project301/ProjectBankingXYZ/src/dao/ICurrentAccountDAO.java</file>
-            <file>file:/C:/Users/ACER/Desktop/Term_1_2023_2024/CSE301/Project301/ProjectBankingXYZ/src/dao/impl/SavingsAccountDAO.java</file>
             <file>file:/C:/Users/ACER/Desktop/Term_1_2023_2024/CSE301/Project301/ProjectBankingXYZ/src/dao/impl/CustomerDAO.java</file>
             <file>file:/C:/Users/ACER/Desktop/Term_1_2023_2024/CSE301/Project301/ProjectBankingXYZ/src/UIFrame/NewCurrentAccountUI.java</file>
-            <file>file:/C:/Users/ACER/Desktop/Term_1_2023_2024/CSE301/Project301/ProjectBankingXYZ/src/controller/CustomerController.java</file>
         </group>
     </open-files>
 </project-private>
