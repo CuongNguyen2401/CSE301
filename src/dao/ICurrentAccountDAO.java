@@ -11,7 +11,7 @@ public interface ICurrentAccountDAO extends GenericDAO<CurrentAccountModel> {
 
     String saveCurrentAcount(CurrentAccountModel currentAccountMode, String id);
 
-    List<CurrentAccountModel> findAllcurrentAccount();
+    List<CurrentAccountModel> findAllCurrentAccount();
     
     CurrentAccountModel findCurrentAccountModelByID(String id);
     

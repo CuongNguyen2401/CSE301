@@ -27,7 +27,13 @@ public class CustomerController {
     }
 
     public void saveCurrentAccount(CurrentAccountModel currentAccountModel, String id) {
-        currentAccountDAO.saveCurrentAcount(currentAccountModel, customerModel.getCustomer_id());
+        currentAccountDAO.saveCurrentAcount(currentAccountModel, id);
+
+    }
+
+    public List<CurrentAccountModel> findAllcurrentAccount() {
+        return currentAccountDAO.findAllCurrentAccount();
+
     }
 
     public List<String> selectBranch() {

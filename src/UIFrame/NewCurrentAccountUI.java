@@ -2,6 +2,9 @@ package UIFrame;
 
 import controller.CustomerController;
 import java.util.List;
+import javax.swing.JOptionPane;
+import model.CurrentAccountModel;
+import model.CustomerModel;
 
 /**
  *
@@ -11,7 +14,7 @@ public class NewCurrentAccountUI extends javax.swing.JDialog {
 
     private CustomerController customerController;
     private CustomerTasksUI customerUI;
-    
+    private CustomerModel customer;
 
     /**
      * Creates new form NewCurrentAccountUI
@@ -19,11 +22,13 @@ public class NewCurrentAccountUI extends javax.swing.JDialog {
      * @param customerUI
      * @param modal
      * @param customerController
+     * @param customer
      */
-    public NewCurrentAccountUI(CustomerTasksUI customerUI, boolean modal, CustomerController customerController) {
+    public NewCurrentAccountUI(CustomerTasksUI customerUI, boolean modal, CustomerController customerController, CustomerModel customer) {
         super(customerUI, modal);
         this.customerController = customerController;
-        this.customerUI=customerUI;
+        this.customerUI = customerUI;
+        this.customer = customer;
         initComponents();
         onLoadCityBranch();
     }
@@ -45,10 +50,9 @@ public class NewCurrentAccountUI extends javax.swing.JDialog {
         txtBalance = new javax.swing.JTextField();
         btnCreate = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
         txtOverdrafts = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -77,14 +81,9 @@ public class NewCurrentAccountUI extends javax.swing.JDialog {
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel11.setText("Balance:");
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel5.setText("Account Number:");
-
-        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(51, 51, 255));
-
         txtOverdrafts.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         txtOverdrafts.setForeground(new java.awt.Color(255, 0, 0));
+        txtOverdrafts.setText("0");
 
         btnBack.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnBack.setText("<- Back");
@@ -94,46 +93,48 @@ public class NewCurrentAccountUI extends javax.swing.JDialog {
             }
         });
 
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jLabel7.setText("Create New Account");
+
         javax.swing.GroupLayout profilePanelLayout = new javax.swing.GroupLayout(profilePanel);
         profilePanel.setLayout(profilePanelLayout);
         profilePanelLayout.setHorizontalGroup(
             profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(profilePanelLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
                 .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(profilePanelLayout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(65, 65, 65)
+                        .addComponent(jLabel7))
                     .addGroup(profilePanelLayout.createSequentialGroup()
+                        .addGap(30, 30, 30)
                         .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel11))
-                        .addGap(35, 35, 35)
-                        .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cmbxBranch, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(profilePanelLayout.createSequentialGroup()
-                                .addComponent(txtBalance, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel10))))
-                    .addGroup(profilePanelLayout.createSequentialGroup()
-                        .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel4)
-                            .addComponent(btnBack))
-                        .addGap(18, 18, 18)
-                        .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnCreate)
-                            .addComponent(txtOverdrafts, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(62, Short.MAX_VALUE))
+                                .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel11))
+                                .addGap(35, 35, 35)
+                                .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cmbxBranch, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(profilePanelLayout.createSequentialGroup()
+                                        .addComponent(txtBalance, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel10))))
+                            .addGroup(profilePanelLayout.createSequentialGroup()
+                                .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(btnBack))
+                                .addGap(18, 18, 18)
+                                .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnCreate)
+                                    .addComponent(txtOverdrafts, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
         profilePanelLayout.setVerticalGroup(
             profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(profilePanelLayout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel12))
-                .addGap(18, 18, 18)
+                .addGap(22, 22, 22)
+                .addComponent(jLabel7)
+                .addGap(61, 61, 61)
                 .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(txtBalance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -150,7 +151,7 @@ public class NewCurrentAccountUI extends javax.swing.JDialog {
                 .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCreate)
                     .addComponent(btnBack))
-                .addContainerGap(198, Short.MAX_VALUE))
+                .addContainerGap(159, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -170,6 +171,33 @@ public class NewCurrentAccountUI extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        this.dispose();
+        customerUI.setVisible(true);
+    }//GEN-LAST:event_btnBackActionPerformed
+
+    private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
+        try {
+            String balanceText = this.txtBalance.getText();
+
+            if (balanceText == null || balanceText.isEmpty() || Double.parseDouble(balanceText) < 1000) {
+                JOptionPane.showMessageDialog(rootPane, "Make sure that you input a number greater than or equal to 1000!");
+            } else {
+                CurrentAccountModel currentAccountModel = new CurrentAccountModel();
+                currentAccountModel.setBalance(Double.parseDouble(balanceText));
+                currentAccountModel.setBranchID(cmbxBranch.getSelectedItem().toString());
+                currentAccountModel.setOverdrafts(0);
+                customerController.saveCurrentAccount(currentAccountModel, customer.getCustomer_id());
+                JOptionPane.showMessageDialog(rootPane, "Create account successful");
+                this.dispose();
+                customerUI.setVisible(true);
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(rootPane, "Invalid input! Please enter a valid number.");
+        }
+    }//GEN-LAST:event_btnCreateActionPerformed
+
     public final void onLoadCityBranch() {
 
         cmbxBranch.removeAllItems();
@@ -181,15 +209,6 @@ public class NewCurrentAccountUI extends javax.swing.JDialog {
         }
     }
 
-    private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
-
-    }//GEN-LAST:event_btnCreateActionPerformed
-
-    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        this.dispose();
-        customerUI.setVisible(true);
-    }//GEN-LAST:event_btnBackActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -200,10 +219,9 @@ public class NewCurrentAccountUI extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> cmbxBranch;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel profilePanel;
     private javax.swing.JTextField txtBalance;
     private javax.swing.JLabel txtOverdrafts;

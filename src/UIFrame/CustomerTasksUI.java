@@ -3,6 +3,9 @@ package UIFrame;
 import controller.CustomerController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import model.CurrentAccountModel;
 import model.CustomerModel;
 
 /**
@@ -10,17 +13,16 @@ import model.CustomerModel;
  * @author ACER
  */
 public class CustomerTasksUI extends javax.swing.JFrame {
-    
+
     private CustomerModel customerModel;
     private CustomerController cusController;
-    
+
     public CustomerTasksUI(CustomerModel customerModel, CustomerController cusController) {
         this.customerModel = customerModel;
         this.cusController = cusController;
         initComponents();
         addListener();
-        onLoad();
-//        setValuesFromModel(customerModel);
+        onLoad();        
     }
 
     /**
@@ -369,7 +371,7 @@ public class CustomerTasksUI extends javax.swing.JFrame {
             }
         });
     }
-    
+
     private void onLoad() {
         this.txtCity.setText(customerModel.getCity());
         this.txtName.setText(customerModel.getName());
@@ -377,19 +379,47 @@ public class CustomerTasksUI extends javax.swing.JFrame {
         this.txtProvince.setText(customerModel.getProvince());
         this.txtSsn.setText(customerModel.getSsn());
         this.txtStreet.setText(customerModel.getStreet());
-        
     }
-    
+
+    private void showTableModel() {
+        DefaultTableModel defaultTableModel = (DefaultTableModel) tblCurrentAccount.getModel();
+        defaultTableModel.setColumnCount(0);
+        defaultTableModel.setRowCount(0);
+
+        List<CurrentAccountModel> currentAccounts = cusController.findAllcurrentAccount();
+
+        defaultTableModel.addColumn("Account Number");
+        defaultTableModel.addColumn("Balance");
+        defaultTableModel.addColumn("Branch ID");
+        defaultTableModel.addColumn("Overdrafts");
+
+        for (CurrentAccountModel a : currentAccounts) {
+            Object[] rowData = {
+                a.getAccountNumber(),
+                a.getBalance(),
+                a.getBranchID(),
+                a.getOverdrafts(),};
+            defaultTableModel.addRow(rowData);
+        }
+    }
+
     private void updateInformation() {
         customerModel.setCity(this.txtCity.getText());
         customerModel.setProvince(this.txtProvince.getText());
         customerModel.setName(this.txtName.getText());
         customerModel.setStreet(this.txtStreet.getText());
-        
+
         cusController.updateInformationCustomer(customerModel);
         System.out.println(customerModel.getCustomer_id());
     }
     
+    private void changeCurrentAccount(){
+         parentCard.removeAll();
+        parentCard.add(this.currentAccount);
+        parentCard.repaint();
+        parentCard.revalidate();
+        showTableModel();
+    }
 
     private void btnViewProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewProfileActionPerformed
         parentCard.removeAll();
@@ -398,12 +428,6 @@ public class CustomerTasksUI extends javax.swing.JFrame {
         parentCard.revalidate();
 
     }//GEN-LAST:event_btnViewProfileActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        parentCard.removeAll();
-        parentCard.add(this.currentAccount);
-        parentCard.repaint();
-        parentCard.revalidate();    }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         this.dispose();
@@ -420,9 +444,14 @@ public class CustomerTasksUI extends javax.swing.JFrame {
 
     private void btnOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenActionPerformed
         this.setVisible(false);
-        NewCurrentAccountUI newcurrentAccount = new NewCurrentAccountUI(this, true, cusController);
+        NewCurrentAccountUI newcurrentAccount = new NewCurrentAccountUI(this, true, cusController, customerModel);
         newcurrentAccount.setVisible(true);
     }//GEN-LAST:event_btnOpenActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+       changeCurrentAccount();
+
+    }//GEN-LAST:event_jButton5ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
