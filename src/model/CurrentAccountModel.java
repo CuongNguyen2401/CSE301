@@ -8,7 +8,7 @@ public class CurrentAccountModel {
 
     private String accountNumber;
     private double balance;
-    private String branchID;
+    private int branchID;
     private double overdrafts;
 
     public String getAccountNumber() {
@@ -27,13 +27,14 @@ public class CurrentAccountModel {
         this.balance = balance;
     }
 
-    public String getBranchID() {
+    public int getBranchID() {
         return branchID;
     }
 
-    public void setBranchID(String branchID) {
+    public void setBranchID(int branchID) {
         this.branchID = branchID;
     }
+
 
 
 

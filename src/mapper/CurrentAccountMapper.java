@@ -13,7 +13,7 @@ public class CurrentAccountMapper implements RowMapper<CurrentAccountModel> {
         try {
             currentAccount.setAccountNumber(rs.getString("account_number"));
             currentAccount.setBalance(rs.getDouble("balance"));
-            currentAccount.setBranchID(rs.getString("branch_id"));
+            currentAccount.setBranchID(rs.getInt("branch_id"));
             currentAccount.setOverdrafts(rs.getDouble("overdrafts"));
         } catch (SQLException ex) {
             System.out.println("Set failed!" + ex);

@@ -11,13 +11,28 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import mapper.CustomerMapper;
+import mapper.PersonPhoneMapper;
 import model.CustomerModel;
+import model.PersonPhoneModel;
 
 /**
  *
  * @author ACER
  */
 public class CustomerDAO extends AbstractDAO<CustomerModel> implements ICustomerDao {
+
+    @Override
+    public java.sql.Connection getConnection() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/bankingxyz";
+            String user = "root";
+            String password = "";
+            return DriverManager.getConnection(url, user, password);
+        } catch (ClassNotFoundException | SQLException e) {
+            return null;
+        }
+    }
 
     @Override
     public CustomerModel findByCustomerID(String customer_id) {
@@ -35,7 +50,8 @@ public class CustomerDAO extends AbstractDAO<CustomerModel> implements ICustomer
         sql.append("INSERT INTO customer (customer_id, credit_rating, ssn, name, dob, street, city, province) ");
         sql.append("VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
         Long generatedId = insert(sql.toString(), customer.getCustomer_id(), customer.getCredit_rating(), customer.getSsn(), customer.getName(), customer.getDob(), customer.getStreet(), customer.getCity(), customer.getProvince());
-
+        
+  
         return generatedId;
     }
 
@@ -122,15 +138,58 @@ public class CustomerDAO extends AbstractDAO<CustomerModel> implements ICustomer
         return null;
     }
 
-    public java.sql.Connection getConnection() {
+    public void customsql(String cmd) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            String url = "jdbc:mysql://localhost:3306/bankingxyz";
-            String user = "root";
-            String password = "";
-            return DriverManager.getConnection(url, user, password);
-        } catch (ClassNotFoundException | SQLException e) {
-            return null;
+            connection = getConnection();
+            connection.setAutoCommit(false);
+
+            String sql = cmd;
+
+            statement = connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
+
+            connection.commit();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                if (connection != null) {
+                    connection.rollback();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
+    }
+
+    public Long save(PersonPhoneModel personPhoneModel) {
+        StringBuffer sql = new StringBuffer();
+        sql.append("INSERT INTO person_phone (ssn, phone) ");
+        sql.append("VALUES (?, ?);");
+        Long generatedId = insert(sql.toString(), personPhoneModel.getSsn(), personPhoneModel.getPhone());
+        return generatedId;
+    }
+
+    public List<PersonPhoneModel> selectAllPhoneBySsn(String ssn) {
+        String sql = "SELECT * FROM person_phone where ssn = ?";
+        return query(sql, new PersonPhoneMapper(), ssn);
     }
 }

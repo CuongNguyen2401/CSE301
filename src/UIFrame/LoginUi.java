@@ -6,7 +6,6 @@ import controller.LoginController;
 import dao.impl.CustomerDAO;
 import dao.impl.EmployeeDAO;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import model.CustomerModel;
 import model.EmployeeModel;
@@ -127,36 +126,30 @@ public class LoginUi extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addListener() {
-        this.btnLogin.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                doLogin();
-            }
+        this.btnLogin.addActionListener((ActionEvent e) -> {
+            doLogin();
         });
-        this.btnSignUp.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                doRegister();
-            }
+        this.btnSignUp.addActionListener((ActionEvent e) -> {
+            doRegister();
         });
     }
 
     private void doLogin() {
         String username = txtUsername.getText();
         String password = txtPassword.getText();
-
+//        String username = "Cust001";
+//        String password = "1985-08-20";
         Object user = myLogin.login(username, password);
 
         if (user instanceof EmployeeModel) {
             // Employee logged in
             EmployeeModel employeeModel = (EmployeeModel) user;
-            // Handle employee-specific actions
             JOptionPane.showMessageDialog(rootPane, "Employee login success");
 
-            EmployeeController employeeController = new EmployeeController(employeeModel);
             //exchange UI frame
             this.dispose();
-            EmployeeTasksUI employeeTasks = new EmployeeTasksUI();
+            EmployeeController employeeController = new EmployeeController(employeeModel);
+            EmployeeTasksUI employeeTasks = new EmployeeTasksUI(employeeController, employeeModel);
             employeeTasks.setVisible(true);
         } else if (user instanceof CustomerModel) {
             // Customer logged in
@@ -165,12 +158,11 @@ public class LoginUi extends javax.swing.JDialog {
 
             //exchange UI frame
             this.dispose();
-            CustomerController customerController = new CustomerController(customerModel, null);
+            CustomerController customerController = new CustomerController(customerModel);
             CustomerTasksUI customerTasks = new CustomerTasksUI(customerModel, customerController);
             customerTasks.setVisible(true);
 
         } else {
-            // Login failed
             JOptionPane.showMessageDialog(rootPane, "Username or password is not correc!t");
         }
     }

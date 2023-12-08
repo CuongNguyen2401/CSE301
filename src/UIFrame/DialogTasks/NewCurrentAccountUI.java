@@ -1,5 +1,6 @@
-package UIFrame;
+package UIFrame.DialogTasks;
 
+import UIFrame.CustomerTasksUI;
 import controller.CustomerController;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -29,6 +30,7 @@ public class NewCurrentAccountUI extends javax.swing.JDialog {
         this.customerController = customerController;
         this.customerUI = customerUI;
         this.customer = customer;
+
         initComponents();
         onLoadCityBranch();
     }
@@ -186,7 +188,8 @@ public class NewCurrentAccountUI extends javax.swing.JDialog {
             } else {
                 CurrentAccountModel currentAccountModel = new CurrentAccountModel();
                 currentAccountModel.setBalance(Double.parseDouble(balanceText));
-                currentAccountModel.setBranchID(cmbxBranch.getSelectedItem().toString());
+
+                currentAccountModel.setBranchID(customerController.findBranchIDByCity((String) this.cmbxBranch.getSelectedItem()));
                 currentAccountModel.setOverdrafts(0);
                 customerController.saveCurrentAccount(currentAccountModel, customer.getCustomer_id());
                 JOptionPane.showMessageDialog(rootPane, "Create account successful");

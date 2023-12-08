@@ -1,5 +1,11 @@
 package UIFrame;
 
+import UIFrame.DialogTasks.AddPhoneDialog;
+import UIFrame.DialogTasks.NewCurrentAccountUI;
+import UIFrame.DialogTasks.NewLoanDialog;
+import UIFrame.DialogTasks.NewSavingAccountUI;
+import UIFrame.DialogTasks.PaymentForLoan;
+import UIFrame.DialogTasks.TransferFromSavingToCurrentAccount;
 import controller.CustomerController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,6 +13,9 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import model.CurrentAccountModel;
 import model.CustomerModel;
+import model.LoanModel;
+import model.PersonPhoneModel;
+import model.SavingAccountModel;
 
 /**
  *
@@ -22,7 +31,7 @@ public class CustomerTasksUI extends javax.swing.JFrame {
         this.cusController = cusController;
         initComponents();
         addListener();
-        onLoad();        
+        onLoadCustomerProfile();
     }
 
     /**
@@ -39,9 +48,9 @@ public class CustomerTasksUI extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         btnViewProfile = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        btnCurrentAccount = new javax.swing.JButton();
+        btnLogOut = new javax.swing.JButton();
+        btnSavingAccount = new javax.swing.JButton();
         parentCard = new javax.swing.JPanel();
         profilePanel = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -60,11 +69,21 @@ public class CustomerTasksUI extends javax.swing.JFrame {
         txtName = new javax.swing.JTextField();
         btnSubmit = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
+        btnAddPhone = new javax.swing.JButton();
         currentAccount = new javax.swing.JPanel();
         btnOpen = new javax.swing.JButton();
-        btnTransfer = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblCurrentAccount = new javax.swing.JTable();
+        SavingAccount = new javax.swing.JPanel();
+        btnNewSaving = new javax.swing.JButton();
+        btnTransfer = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblSavingAccount = new javax.swing.JTable();
+        loan = new javax.swing.JPanel();
+        btnNewSaving1 = new javax.swing.JButton();
+        btnTransfer1 = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblLoan = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -72,7 +91,12 @@ public class CustomerTasksUI extends javax.swing.JFrame {
         jLabel1.setText("Welcome to Banking XYZ");
 
         jButton2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jButton2.setText("View Profile");
+        jButton2.setText("Loan");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         btnViewProfile.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnViewProfile.setText("View Profile");
@@ -83,26 +107,31 @@ public class CustomerTasksUI extends javax.swing.JFrame {
         });
 
         jButton4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jButton4.setText("View Profile");
+        jButton4.setText("History");
 
-        jButton5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jButton5.setText("Current Account");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        btnCurrentAccount.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnCurrentAccount.setText("Current Account");
+        btnCurrentAccount.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                btnCurrentAccountActionPerformed(evt);
             }
         });
 
-        jButton6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jButton6.setText("Log out");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        btnLogOut.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnLogOut.setText("Log out");
+        btnLogOut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                btnLogOutActionPerformed(evt);
             }
         });
 
-        jButton7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jButton7.setText("Saving Account");
+        btnSavingAccount.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnSavingAccount.setText("Saving Account");
+        btnSavingAccount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSavingAccountActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout functionLayoutLayout = new javax.swing.GroupLayout(functionLayout);
         functionLayout.setLayout(functionLayoutLayout);
@@ -114,9 +143,9 @@ public class CustomerTasksUI extends javax.swing.JFrame {
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnViewProfile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnCurrentAccount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnSavingAccount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnLogOut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         functionLayoutLayout.setVerticalGroup(
@@ -125,15 +154,15 @@ public class CustomerTasksUI extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnViewProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnCurrentAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnSavingAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
@@ -192,6 +221,14 @@ public class CustomerTasksUI extends javax.swing.JFrame {
             }
         });
 
+        btnAddPhone.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnAddPhone.setText("Add phone");
+        btnAddPhone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddPhoneActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout profilePanelLayout = new javax.swing.GroupLayout(profilePanel);
         profilePanel.setLayout(profilePanelLayout);
         profilePanelLayout.setHorizontalGroup(
@@ -226,7 +263,10 @@ public class CustomerTasksUI extends javax.swing.JFrame {
                                     .addComponent(jLabel8))
                                 .addGap(40, 40, 40)
                                 .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cmbxPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(profilePanelLayout.createSequentialGroup()
+                                        .addComponent(cmbxPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnAddPhone))
                                     .addComponent(txtSsn, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(profilePanelLayout.createSequentialGroup()
                                 .addComponent(btnUpdate)
@@ -260,7 +300,8 @@ public class CustomerTasksUI extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(cmbxPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbxPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAddPhone))
                 .addGap(18, 18, 18)
                 .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtSsn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -273,7 +314,7 @@ public class CustomerTasksUI extends javax.swing.JFrame {
                 .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnUpdate)
                     .addComponent(btnSubmit))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         parentCard.add(profilePanel, "card2");
@@ -285,9 +326,6 @@ public class CustomerTasksUI extends javax.swing.JFrame {
                 btnOpenActionPerformed(evt);
             }
         });
-
-        btnTransfer.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnTransfer.setText("Transfer");
 
         tblCurrentAccount.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -309,9 +347,7 @@ public class CustomerTasksUI extends javax.swing.JFrame {
             .addGroup(currentAccountLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnOpen)
-                .addGap(18, 18, 18)
-                .addComponent(btnTransfer)
-                .addContainerGap(225, Short.MAX_VALUE))
+                .addContainerGap(339, Short.MAX_VALUE))
             .addGroup(currentAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE))
         );
@@ -319,9 +355,7 @@ public class CustomerTasksUI extends javax.swing.JFrame {
             currentAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, currentAccountLayout.createSequentialGroup()
                 .addContainerGap(408, Short.MAX_VALUE)
-                .addGroup(currentAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnOpen)
-                    .addComponent(btnTransfer))
+                .addComponent(btnOpen)
                 .addContainerGap())
             .addGroup(currentAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(currentAccountLayout.createSequentialGroup()
@@ -330,6 +364,122 @@ public class CustomerTasksUI extends javax.swing.JFrame {
         );
 
         parentCard.add(currentAccount, "card3");
+
+        btnNewSaving.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnNewSaving.setText("New Saving");
+        btnNewSaving.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNewSavingActionPerformed(evt);
+            }
+        });
+
+        btnTransfer.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnTransfer.setText("Transfer");
+        btnTransfer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTransferActionPerformed(evt);
+            }
+        });
+
+        tblSavingAccount.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tblSavingAccount);
+
+        javax.swing.GroupLayout SavingAccountLayout = new javax.swing.GroupLayout(SavingAccount);
+        SavingAccount.setLayout(SavingAccountLayout);
+        SavingAccountLayout.setHorizontalGroup(
+            SavingAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SavingAccountLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnNewSaving)
+                .addGap(18, 18, 18)
+                .addComponent(btnTransfer)
+                .addContainerGap(282, Short.MAX_VALUE))
+            .addGroup(SavingAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE))
+        );
+        SavingAccountLayout.setVerticalGroup(
+            SavingAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SavingAccountLayout.createSequentialGroup()
+                .addContainerGap(408, Short.MAX_VALUE)
+                .addGroup(SavingAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnNewSaving)
+                    .addComponent(btnTransfer))
+                .addContainerGap())
+            .addGroup(SavingAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(SavingAccountLayout.createSequentialGroup()
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 55, Short.MAX_VALUE)))
+        );
+
+        parentCard.add(SavingAccount, "card3");
+
+        btnNewSaving1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnNewSaving1.setText("New Loan");
+        btnNewSaving1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNewSaving1ActionPerformed(evt);
+            }
+        });
+
+        btnTransfer1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnTransfer1.setText("Payment");
+        btnTransfer1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTransfer1ActionPerformed(evt);
+            }
+        });
+
+        tblLoan.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(tblLoan);
+
+        javax.swing.GroupLayout loanLayout = new javax.swing.GroupLayout(loan);
+        loan.setLayout(loanLayout);
+        loanLayout.setHorizontalGroup(
+            loanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(loanLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnNewSaving1)
+                .addGap(18, 18, 18)
+                .addComponent(btnTransfer1)
+                .addContainerGap(292, Short.MAX_VALUE))
+            .addGroup(loanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE))
+        );
+        loanLayout.setVerticalGroup(
+            loanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loanLayout.createSequentialGroup()
+                .addContainerGap(408, Short.MAX_VALUE)
+                .addGroup(loanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnNewSaving1)
+                    .addComponent(btnTransfer1))
+                .addContainerGap())
+            .addGroup(loanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(loanLayout.createSequentialGroup()
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 55, Short.MAX_VALUE)))
+        );
+
+        parentCard.add(loan, "card3");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -372,35 +522,111 @@ public class CustomerTasksUI extends javax.swing.JFrame {
         });
     }
 
-    private void onLoad() {
+    private void onLoadCustomerProfile() {
         this.txtCity.setText(customerModel.getCity());
         this.txtName.setText(customerModel.getName());
         this.txtCreditRating.setText(Float.toString(customerModel.getCredit_rating()));
         this.txtProvince.setText(customerModel.getProvince());
         this.txtSsn.setText(customerModel.getSsn());
         this.txtStreet.setText(customerModel.getStreet());
+        this.cmbxPhone.removeAllItems();
+
+        List<PersonPhoneModel> a = cusController.showAllPhone(customerModel.getSsn());
+        if (a.isEmpty()) {
+            this.cmbxPhone.addItem("No phone yet");
+        } else {
+            for (int i = 0; i < a.size(); i++) {
+                this.cmbxPhone.addItem(a.get(i).getPhone());
+            }
+        }
     }
 
-    private void showTableModel() {
+    private void showTableModelCurrentAccount() {
         DefaultTableModel defaultTableModel = (DefaultTableModel) tblCurrentAccount.getModel();
         defaultTableModel.setColumnCount(0);
         defaultTableModel.setRowCount(0);
 
-        List<CurrentAccountModel> currentAccounts = cusController.findAllcurrentAccount();
+        List<CurrentAccountModel> currentAccounts = cusController.findAllCurrentAccount(customerModel.getCustomer_id());
 
         defaultTableModel.addColumn("Account Number");
         defaultTableModel.addColumn("Balance");
-        defaultTableModel.addColumn("Branch ID");
+        defaultTableModel.addColumn("Branch City");
         defaultTableModel.addColumn("Overdrafts");
 
-        for (CurrentAccountModel a : currentAccounts) {
-            Object[] rowData = {
-                a.getAccountNumber(),
-                a.getBalance(),
-                a.getBranchID(),
-                a.getOverdrafts(),};
-            defaultTableModel.addRow(rowData);
+        if (currentAccounts != null) {
+
+            for (CurrentAccountModel a : currentAccounts) {
+                String branchCity = cusController.findBranchCiTyByID(a.getBranchID());
+                Object[] rowData = {
+                    a.getAccountNumber(),
+                    a.getBalance(),
+                    branchCity,
+                    a.getOverdrafts(),};
+                defaultTableModel.addRow(rowData);
+            }
+
+        } else {
+
         }
+
+    }
+
+    private void showTableModelSavingAccount() {
+        DefaultTableModel defaultTableModel = (DefaultTableModel) tblSavingAccount.getModel();
+        defaultTableModel.setColumnCount(0);
+        defaultTableModel.setRowCount(0);
+
+        List<SavingAccountModel> savingAccountModel = cusController.findAllSavingAccount(customerModel.getCustomer_id());
+
+        defaultTableModel.addColumn("Account Number");
+        defaultTableModel.addColumn("Balance");
+        defaultTableModel.addColumn("Branch City");
+        defaultTableModel.addColumn("Interest Rate");
+
+        if (savingAccountModel != null) {
+
+            for (SavingAccountModel a : savingAccountModel) {
+                String branchCity = cusController.findBranchCiTyByID(a.getBranchID());
+                Object[] rowData = {
+                    a.getAccountNumber(),
+                    a.getBalance(),
+                    branchCity,
+                    a.getInterestRate()};
+                defaultTableModel.addRow(rowData);
+            }
+
+        } else {
+            System.out.println("no data");
+        }
+
+    }
+// Still error here
+    private void showTableModelLoan() {
+        DefaultTableModel defaultTableModel = (DefaultTableModel) tblLoan.getModel();
+        defaultTableModel.setColumnCount(0);
+        defaultTableModel.setRowCount(0);
+
+        List<LoanModel> loanLists = cusController.findAllLoan(customerModel.getCustomer_id());
+
+        defaultTableModel.addColumn("Loan Number");
+        defaultTableModel.addColumn("Loan Amount");
+        defaultTableModel.addColumn("Branch City");
+
+        if (loanLists != null) {
+
+            for (LoanModel a : loanLists) {
+                String branchCity = cusController.findBranchCiTyByID(a.getBranch_id());
+                Object[] rowData = {
+                    a.getLoanNumber(),
+                    a.getLoanAmount(),
+                    branchCity};
+                defaultTableModel.addRow(rowData);
+            }
+
+        } else {
+            System.out.println("no data");
+        }
+
     }
 
     private void updateInformation() {
@@ -410,15 +636,15 @@ public class CustomerTasksUI extends javax.swing.JFrame {
         customerModel.setStreet(this.txtStreet.getText());
 
         cusController.updateInformationCustomer(customerModel);
-        System.out.println(customerModel.getCustomer_id());
+
     }
-    
-    private void changeCurrentAccount(){
-         parentCard.removeAll();
+
+    private void changeCurrentAccount() {
+        parentCard.removeAll();
         parentCard.add(this.currentAccount);
         parentCard.repaint();
         parentCard.revalidate();
-        showTableModel();
+        showTableModelCurrentAccount();
     }
 
     private void btnViewProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewProfileActionPerformed
@@ -426,38 +652,94 @@ public class CustomerTasksUI extends javax.swing.JFrame {
         parentCard.add(this.profilePanel);
         parentCard.repaint();
         parentCard.revalidate();
+        onLoadCustomerProfile();
 
     }//GEN-LAST:event_btnViewProfileActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void btnLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogOutActionPerformed
         this.dispose();
         LoginUi newLogin = new LoginUi(this, true);
         newLogin.setVisible(true);
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_btnLogOutActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         this.txtCity.setEnabled(true);
         this.txtProvince.setEnabled(true);
         this.txtName.setEnabled(true);
         this.txtStreet.setEnabled(true);
+
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenActionPerformed
-        this.setVisible(false);
         NewCurrentAccountUI newcurrentAccount = new NewCurrentAccountUI(this, true, cusController, customerModel);
         newcurrentAccount.setVisible(true);
     }//GEN-LAST:event_btnOpenActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-       changeCurrentAccount();
+    private void btnCurrentAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCurrentAccountActionPerformed
+        changeCurrentAccount();
 
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_btnCurrentAccountActionPerformed
+
+    private void btnAddPhoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPhoneActionPerformed
+
+        AddPhoneDialog newPhone = new AddPhoneDialog(this, true, customerModel, cusController);
+        newPhone.setVisible(true);
+    }//GEN-LAST:event_btnAddPhoneActionPerformed
+
+    private void btnNewSavingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewSavingActionPerformed
+        // TODO add your handling code here:
+        NewSavingAccountUI a = new NewSavingAccountUI(this, true, cusController, customerModel);
+        a.setVisible(true);
+
+    }//GEN-LAST:event_btnNewSavingActionPerformed
+
+    private void btnSavingAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSavingAccountActionPerformed
+        parentCard.removeAll();
+        parentCard.add(this.SavingAccount);
+        parentCard.repaint();
+        parentCard.revalidate();
+        showTableModelSavingAccount();
+    }//GEN-LAST:event_btnSavingAccountActionPerformed
+
+    private void btnTransferActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransferActionPerformed
+        TransferFromSavingToCurrentAccount a = new TransferFromSavingToCurrentAccount(this, rootPaneCheckingEnabled, customerModel, cusController);
+        a.setVisible(true);
+    }//GEN-LAST:event_btnTransferActionPerformed
+
+    private void btnNewSaving1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewSaving1ActionPerformed
+        // TODO add your handling code here:
+        NewLoanDialog a = new NewLoanDialog(this, true, cusController, customerModel);
+        a.setVisible(true);
+    }//GEN-LAST:event_btnNewSaving1ActionPerformed
+
+    private void btnTransfer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransfer1ActionPerformed
+        // TODO add your handling code here:
+        PaymentForLoan a = new PaymentForLoan(this, true, customerModel, cusController);
+        a.setVisible(true);
+    }//GEN-LAST:event_btnTransfer1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        parentCard.removeAll();
+        parentCard.add(this.loan);
+        parentCard.repaint();
+        parentCard.revalidate();
+        showTableModelLoan();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel SavingAccount;
+    private javax.swing.JButton btnAddPhone;
+    private javax.swing.JButton btnCurrentAccount;
+    private javax.swing.JButton btnLogOut;
+    private javax.swing.JButton btnNewSaving;
+    private javax.swing.JButton btnNewSaving1;
     private javax.swing.JButton btnOpen;
+    private javax.swing.JButton btnSavingAccount;
     private javax.swing.JButton btnSubmit;
     private javax.swing.JButton btnTransfer;
+    private javax.swing.JButton btnTransfer1;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JButton btnViewProfile;
     private javax.swing.JComboBox<String> cmbxPhone;
@@ -465,9 +747,6 @@ public class CustomerTasksUI extends javax.swing.JFrame {
     private javax.swing.JPanel functionLayout;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel4;
@@ -477,9 +756,14 @@ public class CustomerTasksUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JPanel loan;
     private javax.swing.JPanel parentCard;
     private javax.swing.JPanel profilePanel;
     private javax.swing.JTable tblCurrentAccount;
+    private javax.swing.JTable tblLoan;
+    private javax.swing.JTable tblSavingAccount;
     private javax.swing.JTextField txtCity;
     private javax.swing.JTextField txtCreditRating;
     private javax.swing.JTextField txtName;

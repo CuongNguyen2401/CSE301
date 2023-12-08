@@ -3,7 +3,9 @@ package dao.impl;
 import dao.ICurrentAccountDAO;
 import java.util.Date;
 import java.util.List;
+import mapper.BranchMapper;
 import mapper.CurrentAccountMapper;
+import model.BranchModel;
 import model.CurrentAccountModel;
 
 /**
@@ -46,10 +48,10 @@ public class CurrentAccountDAO extends AbstractDAO<CurrentAccountModel> implemen
     }
 
     @Override
-    public List<CurrentAccountModel> findAllCurrentAccount() {
+    public List<CurrentAccountModel> findAllCurrentAccount(String customer_id) {
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT * FROM current_account");
-        return query(sql.toString(), new CurrentAccountMapper());
+        sql.append("SELECT * FROM current_account JOIN current_account_customer ON current_account.account_number = current_account_customer.account_number WHERE customer_id = ?;");
+        return query(sql.toString(), new CurrentAccountMapper(), customer_id);
     }
 
     @Override
@@ -58,6 +60,21 @@ public class CurrentAccountDAO extends AbstractDAO<CurrentAccountModel> implemen
         sql.append("SELECT * FROM current_account where account_number = ?");
         List<CurrentAccountModel> models = query(sql.toString(), new CurrentAccountMapper(), id);
         return models.isEmpty() ? null : models.get(0);
+    }
+// comment here
+    public int selectBranchIDByCurrentAccount(String branch) {
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT* FROM branch where branch_city = ? ");
+        List<BranchModel> models =  query(sql.toString(), new BranchMapper(), branch);
+        
+       return models.isEmpty() ? null : models.get(0).getBranchId();
+    }
+      public String selectBranchCityByCurrentAccount(int branch_id) {
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT* FROM branch where branch_id= ? ");
+        List<BranchModel> models =  query(sql.toString(), new BranchMapper(), branch_id);
+        
+       return models.isEmpty() ? null : models.get(0).getBranchCity();
     }
 
 }

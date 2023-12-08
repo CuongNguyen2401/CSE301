@@ -16,7 +16,7 @@ public class BranchMapper implements RowMapper<BranchModel>{
     public BranchModel mapRow(ResultSet rs) {
         BranchModel branchModel = new BranchModel();
         try {
-            branchModel.setBranchId(rs.getString("branch_id"));
+            branchModel.setBranchId(rs.getInt("branch_id"));
             branchModel.setBranchCity(rs.getString("branch_city"));
             branchModel.setAssets(rs.getFloat("assets"));
         } catch (SQLException ex) {

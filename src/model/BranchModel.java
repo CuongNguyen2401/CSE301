@@ -6,15 +6,15 @@ package model;
  */
 public class BranchModel {
 
-    private String branchId;
+    private int branchId;
     private String branchCity;
     private float assets;
 
-    public String getBranchId() {
+    public int getBranchId() {
         return branchId;
     }
 
-    public void setBranchId(String branchId) {
+    public void setBranchId(int branchId) {
         this.branchId = branchId;
     }
 

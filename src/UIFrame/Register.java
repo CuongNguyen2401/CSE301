@@ -195,7 +195,7 @@ public class Register extends javax.swing.JDialog {
                         .addGap(112, 112, 112)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
@@ -233,18 +233,19 @@ public class Register extends javax.swing.JDialog {
     private void doRegister() {
 
         Date dob = txtDob.getDate();
+        String ssn = txtSsn.getText();
 
         // Check if dob is not null before proceeding
-        if (dob != null) {
+        if (dob != null && !ssn.isBlank()) {
             String fullName = txtName.getText();
             java.sql.Date sqlDate = new java.sql.Date(dob.getTime());
-            String ssn = txtSsn.getText();
             String street = txtStreet.getText();
             String city = txtCity.getText();
             String province = txtProvince.getText();
             String role = (String) cmbxRole.getSelectedItem();
 
             if (role.equalsIgnoreCase("customer")) {
+
                 CustomerModel a = new CustomerModel();
                 a.setCity(city);
                 a.setCredit_rating(NULL_VALUE_FORMAT);
@@ -255,7 +256,6 @@ public class Register extends javax.swing.JDialog {
                 a.setStreet(street);
                 cusController.save(a);
                 JOptionPane.showMessageDialog(rootPane, "Create new customer account successful!\nYour Username will be: " + cusController.findLastCustomerById() + "\nYour Password will be: " + a.getDob());
-
                 goBack();
             } else {
                 EmployeeModel b = new EmployeeModel();
@@ -270,12 +270,8 @@ public class Register extends javax.swing.JDialog {
                 goBack();
             }
         } else {
-            JOptionPane.showMessageDialog(rootPane, "Date of Birth cannot be null.");
+            JOptionPane.showMessageDialog(rootPane, "Date of Birth and ssn cannot be null.");
         }
-    }
-
-    private void doValidate() {
-
     }
 
     private void goBack() {
